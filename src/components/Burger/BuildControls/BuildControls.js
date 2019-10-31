@@ -18,6 +18,7 @@ const BuildControls = (props) => (
                 type={crtl.type}
                 added={props.ingredientAdded}
                 removed={props.ingredientRemoved}
+                disabled={props.disabled[crtl.type]}
             />
         ))}
     </div>
