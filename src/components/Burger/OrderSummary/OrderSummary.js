@@ -9,6 +9,7 @@ const OrderSummary = (props) => {
             </li>
         );
     });
+
     return (
         <Fragment>
             <h3>Your Order</h3>
