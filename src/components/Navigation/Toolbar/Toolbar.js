@@ -10,8 +10,9 @@ const Toolbar = (props) => (
             Menu
         </div>
 
-        <Logo />
-
+        <div className={classes.Logo}>
+            <Logo />
+        </div>
         <nav>
             <NavigationItems/>
         </nav>
