@@ -24,7 +24,7 @@ const OrderSummary = (props) => {
             <Button btnType={'Danger'} clicked={props.modalClose}>
                 CANCEL
             </Button>
-            <Button btnType={'Success'} clicked={props.modalClose}>
+            <Button btnType={'Success'} clicked={props.modalContinue}>
                 CONTINUE
             </Button>
         </Fragment>
