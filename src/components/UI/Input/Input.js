@@ -4,19 +4,24 @@ import classes from './Input.module.css';
 
 const Input = (props) => {
     let inputElement = null;
+    const inputClasses = [classes.InputElement];
+
+    if (props.invalid) {
+        inputClasses.push(classes.Invalid);
+    }
 
     switch (props.elementType) {
         case ('input'):
-            inputElement = <input className={classes.InputElement} onChange={props.changed}
+            inputElement = <input className={inputClasses.join(' ')} onChange={props.changed}
                                   {...props.elementConfig} value={props.value}/>;
             break;
         case ('textarea'):
-            inputElement = <textarea className={classes.InputElement} onChange={props.changed}
+            inputElement = <textarea className={inputClasses.join(' ')} onChange={props.changed}
                                      {...props.elementConfig} value={props.value}/>;
             break;
         case ('select'):
             inputElement = (
-                <select className={classes.InputElement} onChange={props.changed}
+                <select className={inputClasses.join(' ')} onChange={props.changed}
                         value={props.value}>
                     {props.elementConfig.option.map(option => {
                         return (<option key={option.value} value={option.value}>
@@ -27,7 +32,7 @@ const Input = (props) => {
             );
             break;
         default:
-            inputElement = <input className={classes.InputElement} onChange={props.changed}
+            inputElement = <input className={inputClasses.join(' ')} onChange={props.changed}
                                   {...props.elementConfig} value={props.value}/>;
     }
 
