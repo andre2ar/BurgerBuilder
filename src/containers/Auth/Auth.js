@@ -35,7 +35,7 @@ class Auth extends Component {
                 valid: false
             }
         },
-        isSignup: true
+        isSignup: false
     };
 
     checkValidity(value, rules) {
