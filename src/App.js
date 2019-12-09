@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Route, Switch} from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 
 import Layout from './containers/Layout/Layout';
 
@@ -31,7 +31,6 @@ class App extends Component {
             </div>
         );
     }
-
 }
 
 const mapDispatchToProps = dispatch => {
@@ -40,4 +39,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(null, mapDispatchToProps)(App);
+export default withRouter(connect(null, mapDispatchToProps)(App));
