@@ -5,7 +5,6 @@ import {authCheckState} from "./store/actions";
 
 import Layout from './containers/Layout/Layout';
 import Spinner from "./components/UI/Spinner/Spinner";
-import Order from "./components/Order/Order";
 
 const BurgerBuilder = React.lazy(() => import('./containers/BurgerBuilder/BurgerBuilder'));
 const Checkout = React.lazy(() => import('./containers/Checkout/Checkout'));
