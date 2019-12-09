@@ -8,6 +8,7 @@ import Input from "../../../components/UI/Input/Input";
 import Button from "../../../components/UI/Button/Button";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
+import { checkValidity } from "../../../shared/utility";
 import * as actions from '../../../store/actions/index';
 
 class ContactData extends Component {
@@ -107,12 +108,6 @@ class ContactData extends Component {
         this.props.onOrderBurger(order, this.props.token);
     };
 
-    checkValidity(value, rules) {
-        if (rules && rules.required) {
-            return value.trim() !== '';
-        }else return true;
-    }
-
     inputChangeHandler = (event, inputIdentifier) => {
         const updatedOrderForm = {
             ...this.state.orderForm
@@ -124,7 +119,7 @@ class ContactData extends Component {
 
         updatedFormElement.value = event.target.value;
 
-        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+        updatedFormElement.valid = checkValidity(updatedFormElement.value, updatedFormElement.validation);
 
         updatedOrderForm[inputIdentifier] = updatedFormElement;
 
