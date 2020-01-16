@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import Button from "../../UI/Button/Button";
 
 const OrderSummary = (props) => {
@@ -11,7 +11,7 @@ const OrderSummary = (props) => {
     });
 
     return (
-        <Fragment>
+        <>
             <h3>Your Order</h3>
             <p>A delicious burger with the following ingredients:</p>
 
@@ -27,7 +27,7 @@ const OrderSummary = (props) => {
             <Button btnType={'Success'} clicked={props.modalContinue}>
                 CONTINUE
             </Button>
-        </Fragment>
+        </>
     );
 };
 
