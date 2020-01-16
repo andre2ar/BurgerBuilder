@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {useState} from 'react';
 import { connect } from 'react-redux';
 
 import classes from './Layout.module.css';
@@ -17,7 +17,7 @@ const Layout = props => {
     };
 
     return (
-        <Fragment>
+        <>
             <Toolbar
                 isAuth={props.isAuthenticated}
                 drawerToggleClicked={sideDrawerToggleHandler}/>
@@ -31,7 +31,7 @@ const Layout = props => {
             <main className={classes.Content}>
                 {props.children}
             </main>
-        </Fragment>
+        </>
     );
 };
 

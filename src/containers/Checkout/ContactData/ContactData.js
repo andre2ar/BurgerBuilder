@@ -1,4 +1,4 @@
-import React, {useState, Fragment} from 'react';
+import React, {useState} from 'react';
 import { connect } from 'react-redux';
 
 import classes from './ContactData.module.css';
@@ -133,7 +133,7 @@ const ContactData = props => {
     }
 
     let form = (
-        <Fragment>
+        <>
             <h4>Enter your contact data</h4>
 
             <form onSubmit={orderHandler}>
@@ -152,7 +152,7 @@ const ContactData = props => {
                     ORDER
                 </Button>
             </form>
-        </Fragment>
+        </>
     );
 
     if(props.loading) {
