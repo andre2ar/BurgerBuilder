@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
 import ContactData from "./ContactData/ContactData";
+import {withRouter} from "react-router-dom";
 
 class Checkout extends Component {
     checkoutCancelledHandler = () => {
@@ -46,4 +47,4 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps)(Checkout);
+export default withRouter(connect(mapStateToProps)(Checkout));

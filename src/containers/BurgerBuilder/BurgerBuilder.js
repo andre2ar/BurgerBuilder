@@ -10,6 +10,7 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import * as actions from '../../store/actions/index';
+import {withRouter} from "react-router-dom";
 
 class BurgerBuilder extends Component{
     state = {
@@ -117,4 +118,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(BurgerBuilder, axios));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(BurgerBuilder, axios)));
