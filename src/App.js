@@ -1,4 +1,4 @@
-import React, { Component, Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {authCheckState} from "./store/actions";
@@ -12,74 +12,41 @@ const Orders = React.lazy(() => import('./containers/Orders/Orders'));
 const Auth = React.lazy(() => import('./containers/Auth/Auth'));
 const Logout = React.lazy(() => import('./containers/Auth/Logout/Logout'));
 
-class App extends Component {
-    componentDidMount() {
-        this.props.onTryAutoSignup();
-    }
+const App = props => {
+    useEffect(() => {
+        props.onTryAutoSignup();
+    }, []);
 
-    render() {
-        let routes = null;
-        if(this.props.isAuthenticated) {
-            routes = (
-                <Switch>
-                    <Route path='/checkout' render={() =>
-                        <Suspense fallback={<Spinner/>}>
-                            <Checkout />
-                        </Suspense>
-                    } />
-
-                    <Route path='/orders' render={() =>
-                        <Suspense fallback={<Spinner/>}>
-                            <Orders />
-                        </Suspense>
-                    } />
-
-                    <Route path='/logout' render={() =>
-                        <Suspense fallback={<Spinner/>}>
-                            <Logout/>
-                        </Suspense>
-                    } />
-
-                    <Route path='/auth' render={() =>
-                        <Suspense fallback={<Spinner/>}>
-                            <Auth />
-                        </Suspense>
-                    } />
-
-                    <Route path='/' render={() =>
-                        <Suspense fallback={<Spinner/>}>
-                            <BurgerBuilder/>
-                        </Suspense>
-                    } />
-                </Switch>
-            );
-        } else {
-            routes = (
-                <Switch>
-                    <Route path='/auth' render={() =>
-                        <Suspense fallback={<Spinner/>}>
-                            <Auth />
-                        </Suspense>
-                    } />
-
-                    <Route path='/' render={() =>
-                        <Suspense fallback={<Spinner/>}>
-                            <BurgerBuilder/>
-                        </Suspense>
-                    } />
-                </Switch>
-            );
-        }
-
-        return (
-            <div>
-                <Layout>
-                    { routes }
-                </Layout>
-            </div>
+    let routes = null;
+    if(props.isAuthenticated) {
+        routes = (
+            <Switch>
+                <Route path='/checkout' render={() => <Checkout /> } />
+                <Route path='/orders' render={() => <Orders /> } />
+                <Route path='/logout' component={() => <Logout/> } />
+                <Route path='/auth' render={() => <Auth /> } />
+                <Route path='/' component={() => <BurgerBuilder/> } />
+            </Switch>
+        );
+    } else {
+        routes = (
+            <Switch>
+                <Route path='/auth' render={() => <Auth />} />
+                <Route path='/' component={() => <BurgerBuilder/>} />
+            </Switch>
         );
     }
-}
+
+    return (
+        <div>
+            <Layout>
+                <Suspense fallback={<Spinner/>}>
+                    { routes }
+                </Suspense>
+            </Layout>
+        </div>
+    );
+};
 
 const mapStateToProps = state => {
     return {
