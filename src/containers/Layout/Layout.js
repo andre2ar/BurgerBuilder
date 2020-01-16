@@ -1,45 +1,39 @@
-import React, {Fragment, Component} from 'react';
+import React, {Fragment, useState} from 'react';
 import { connect } from 'react-redux';
 
 import classes from './Layout.module.css';
 import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
 import SideDrawer from "../../components/Navigation/SideDrawer/SideDrawer";
 
-class Layout extends Component {
-    state = {
-        showSideDrawer: false
+const Layout = props => {
+    const [showSideDrawer, setshowSideDrawer] = useState(false);
+
+    const sideDrawerClosedHandler = () => {
+        setshowSideDrawer(false);
     };
 
-    sideDrawerClosedHandler = () => {
-        this.setState({showSideDrawer: false});
+    const sideDrawerToggleHandler = () => {
+        setshowSideDrawer(!showSideDrawer);
     };
 
-    sideDrawerToggleHandler = () => {
-        this.setState((prevState) => {
-            return {showSideDrawer: !prevState.showSideDrawer}
-        });
-    };
+    return (
+        <Fragment>
+            <Toolbar
+                isAuth={props.isAuthenticated}
+                drawerToggleClicked={sideDrawerToggleHandler}/>
 
-    render() {
-        return (
-            <Fragment>
-                <Toolbar
-                    isAuth={this.props.isAuthenticated}
-                    drawerToggleClicked={this.sideDrawerToggleHandler}/>
+            <SideDrawer
+                isAuth={props.isAuthenticated}
+                open={showSideDrawer}
+                closed={sideDrawerClosedHandler}
+            />
 
-                <SideDrawer
-                    isAuth={this.props.isAuthenticated}
-                    open={this.state.showSideDrawer}
-                    closed={this.sideDrawerClosedHandler}
-                />
-
-                <main className={classes.Content}>
-                    {this.props.children}
-                </main>
-            </Fragment>
-        )
-    }
-}
+            <main className={classes.Content}>
+                {props.children}
+            </main>
+        </Fragment>
+    );
+};
 
 const mapStateToProps = state => {
     return {
