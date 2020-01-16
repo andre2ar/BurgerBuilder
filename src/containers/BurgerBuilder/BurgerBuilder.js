@@ -15,9 +15,11 @@ import {withRouter} from "react-router-dom";
 const BurgerBuilder = props => {
     const [purchasing, setPurchasing] = useState(false);
 
+    const { onInitIngredients } = props;
+
     useEffect(() => {
-        props.onInitIngredients();
-    }, []);
+        onInitIngredients();
+    }, [onInitIngredients]);
 
     const updatePurchasable = (ingredients) => {
         const sum = Object.keys(ingredients).map(ingredient => {

@@ -13,9 +13,10 @@ const Auth = React.lazy(() => import('./containers/Auth/Auth'));
 const Logout = React.lazy(() => import('./containers/Auth/Logout/Logout'));
 
 const App = props => {
+    const { onTryAutoSignup } = props;
     useEffect(() => {
-        props.onTryAutoSignup();
-    }, []);
+        onTryAutoSignup();
+    }, [onTryAutoSignup]);
 
     let routes = null;
     if(props.isAuthenticated) {
