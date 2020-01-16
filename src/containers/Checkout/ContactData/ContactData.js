@@ -97,10 +97,10 @@ const ContactData = props => {
 
         //.json is an specific thing from firebase
         const order = {
-            ingredients: this.props.ingredients,
-            price: this.props.price,
+            ingredients: props.ingredients,
+            price: props.price,
             orderData: formData,
-            userId: this.props.userId
+            userId: props.userId
         };
 
         props.onOrderBurger(order, props.token);
@@ -144,7 +144,7 @@ const ContactData = props => {
                         elementConfig={formElement.config.elementConfig}
                         value={formElement.config.value}
                         invalid={!formElement.config.valid}
-                        changed={(event) => this.inputChangeHandler(event, formElement.id)}
+                        changed={(event) => inputChangeHandler(event, formElement.id)}
                     />
                 ))}
 
