@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, {useState, Fragment} from 'react';
 import { connect } from 'react-redux';
 
 import classes from './ContactData.module.css';
@@ -11,90 +11,88 @@ import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 import { checkValidity } from "../../../shared/utility";
 import * as actions from '../../../store/actions/index';
 
-class ContactData extends Component {
-    state = {
-        orderForm: {
-            name: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'Your name'
-                },
-                value: '',
-                validation: {
-                    required: true
-                },
-                valid: false
+const ContactData = props => {
+    const [orderForm, setOrderForm] = useState({
+        name: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                placeholder: 'Your name'
             },
-            street: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'Street'
-                },
-                value: '',
-                validation: {
-                    required: true
-                },
-                valid: false
+            value: '',
+            validation: {
+                required: true
             },
-            zipCode: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'Zip Code'
-                },
-                value: '',
-                validation: {
-                    required: true
-                },
-                valid: false
+            valid: false
+        },
+        street: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                placeholder: 'Street'
             },
-            country: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'Country'
-                },
-                value: '',
-                validation: {
-                    required: true
-                },
-                valid: false
+            value: '',
+            validation: {
+                required: true
             },
-            email: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'email',
-                    placeholder: 'Your E-mail'
-                },
-                value: '',
-                validation: {
-                    required: true
-                },
-                valid: false
+            valid: false
+        },
+        zipCode: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                placeholder: 'Zip Code'
             },
-            deliveryMethod: {
-                elementType: 'select',
-                elementConfig: {
-                    option: [
-                        {value: 'fastest', displayValue: 'Fastest'},
-                        {value: 'cheapest', displayValue: 'Cheapest'}
-                    ]
-                },
-                value: 'fastest',
-                valid: true
-            }
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false
+        },
+        country: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                placeholder: 'Country'
+            },
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false
+        },
+        email: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'email',
+                placeholder: 'Your E-mail'
+            },
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false
+        },
+        deliveryMethod: {
+            elementType: 'select',
+            elementConfig: {
+                option: [
+                    {value: 'fastest', displayValue: 'Fastest'},
+                    {value: 'cheapest', displayValue: 'Cheapest'}
+                ]
+            },
+            value: 'fastest',
+            valid: true
         }
-    };
+    });
 
-    orderHandler = (event) => {
+    const orderHandler = (event) => {
         event.preventDefault();
 
         const formData = {};
 
-        for(let id in this.state.orderForm) {
-            formData[id] = this.state.orderForm[id].value;
+        for(let id in orderForm) {
+            formData[id] = orderForm[id].value;
         }
 
         //.json is an specific thing from firebase
@@ -105,12 +103,12 @@ class ContactData extends Component {
             userId: this.props.userId
         };
 
-        this.props.onOrderBurger(order, this.props.token);
+        props.onOrderBurger(order, props.token);
     };
 
-    inputChangeHandler = (event, inputIdentifier) => {
+    const inputChangeHandler = (event, inputIdentifier) => {
         const updatedOrderForm = {
-            ...this.state.orderForm
+            ...orderForm
         };
 
         const updatedFormElement = {
@@ -123,51 +121,49 @@ class ContactData extends Component {
 
         updatedOrderForm[inputIdentifier] = updatedFormElement;
 
-        this.setState({orderForm: updatedOrderForm});
+        setOrderForm(updatedOrderForm);
     };
 
-    render() {
-        const formElementsArray = [];
-        for(let key in this.state.orderForm) {
-            formElementsArray.push({
-                id: key,
-                config: this.state.orderForm[key]
-            });
-        }
-
-        let form = (
-            <Fragment>
-                <h4>Enter your contact data</h4>
-
-                <form onSubmit={this.orderHandler}>
-                    {formElementsArray.map(formElement => (
-                        <Input
-                            key={formElement.id}
-                            elementType={formElement.config.elementType}
-                            elementConfig={formElement.config.elementConfig}
-                            value={formElement.config.value}
-                            invalid={!formElement.config.valid}
-                            changed={(event) => this.inputChangeHandler(event, formElement.id)}
-                        />
-                    ))}
-
-                    <Button btnType="Success">
-                        ORDER
-                    </Button>
-                </form>
-            </Fragment>
-        );
-
-        if(this.props.loading) {
-            form = <Spinner/>;
-        }
-        return (
-            <div className={classes.ContactData}>
-                {form}
-            </div>
-        );
+    const formElementsArray = [];
+    for(let key in orderForm) {
+        formElementsArray.push({
+            id: key,
+            config: orderForm[key]
+        });
     }
-}
+
+    let form = (
+        <Fragment>
+            <h4>Enter your contact data</h4>
+
+            <form onSubmit={orderHandler}>
+                {formElementsArray.map(formElement => (
+                    <Input
+                        key={formElement.id}
+                        elementType={formElement.config.elementType}
+                        elementConfig={formElement.config.elementConfig}
+                        value={formElement.config.value}
+                        invalid={!formElement.config.valid}
+                        changed={(event) => this.inputChangeHandler(event, formElement.id)}
+                    />
+                ))}
+
+                <Button btnType="Success">
+                    ORDER
+                </Button>
+            </form>
+        </Fragment>
+    );
+
+    if(props.loading) {
+        form = <Spinner/>;
+    }
+    return (
+        <div className={classes.ContactData}>
+            {form}
+        </div>
+    );
+};
 
 const mapStateToProps = state => {
     return {

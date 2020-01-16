@@ -23,7 +23,7 @@ const Checkout = props => {
             <div>
                 {purchasedRedirect}
                 <CheckoutSummary
-                    ingredients={this.props.ings}
+                    ingredients={props.ings}
                     checkoutCancelled={checkoutCancelledHandler}
                     checkoutContinued={checkoutContinuedHandler}
                 />
